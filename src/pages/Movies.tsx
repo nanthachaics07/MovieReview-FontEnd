@@ -1,4 +1,4 @@
-import { release } from "os";
+// import { release } from "os";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 
@@ -210,39 +210,67 @@ const Movies = () => {
       }
     ];
     setMovies(moviesList);
-  }, []);
-  
+  }, [id]);
 
+
+  
   return (
-    <div className="container mx-auto">
-      <div className="">
-        <div className="">
-          <div className="absolute justify-center mx-[250px] mt-[6rem]">
-            <h2 className="text-3xl font-bold mb-4 text-back text-center text-white">Movies</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-[3rem]">
-              {movies.map((movie) => (
-                <div key={movie.id} className="p-4 bg-gray-100 rounded-lg">
-                  {movie.imageUrl && (
-                    <img
-                      src={movie.imageUrl}
-                      alt={movie.title}
-                      className="w-full h-64 object-cover mb-2"
-                    />
-                  )}
-                  <Link to={`/movies/${movie.id}`}>
-                    <h3 className="text-xl font-semibold mb-2">{movie.title}</h3>
-                  </Link>
-                  <p className="text-gray-700">{movie.release_date}</p>
-                  <p className="text-gray-700">{movie.mpaa_rating}</p>
-                </div>
-              ))}
-            </div>
+    <div className="container mx-auto absolute inset-[5.5rem]">
+      <h2 className="text-3xl font-bold mb-6 text-back text-center text-white">
+          Movie Review
+      </h2>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 pb-[3rem]">
+        {movies.map((movie) => (
+          <div key={movie.id} className="p-4 bg-gray-100 rounded-lg hover:bg-gray-200/80">
+            <Link to={`/movies/${movie.id}`}>
+              {movie.imageUrl && (
+                <img
+                  src={movie.imageUrl}
+                  alt={movie.title}
+                  className="w-full h-64 object-cover mb-2 rounded-sm"
+                />
+              )}
+
+            <h3 className="text-xl font-semibold mb-2">{movie.title}</h3>
+            <p className="text-gray-700">{movie.release_date}</p>
+            <p className="text-gray-700">{movie.mpaa_rating}</p>
+            </Link>
           </div>
-        </div>
+        ))}
       </div>
+      {/* <img id="enlarged-image" 
+        className="hidden fixed top-0 left-0 right-0 bottom-0 mx-auto max-h-full max-w-full" 
+        alt="Enlarged Movie Poster" /> */}
     </div>
   );
-  
+
+
+  // return (
+  //   <div className="container mx-auto">
+  //     <div className="absolute justify-center mx-[250px] mt-[6rem]">
+  //       <h2 className="text-3xl font-bold mb-4 text-back text-center text-white">Movies</h2>
+  //       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mb-[3rem] overflow-x-auto">
+  //         {movies.map((movie) => (
+  //           <div key={movie.id} className="p-4 bg-gray-100 rounded-lg">
+  //             {movie.imageUrl && (
+  //               <img
+  //                 src={movie.imageUrl}
+  //                 alt={movie.title}
+  //                 className="w-full h-64 object-cover mb-2"
+  //               />
+  //             )}
+  //             <Link to={`/movies/${movie.id}`}>
+  //               <h3 className="text-xl font-semibold mb-2">{movie.title}</h3>
+  //             </Link>
+  //             <p className="text-gray-700">{movie.release_date}</p>
+  //             <p className="text-gray-700">{movie.mpaa_rating}</p>
+  //           </div>
+  //         ))}
+  //       </div>
+  //     </div>
+  //   </div>
+  // );
+
 };
 
 export default Movies;

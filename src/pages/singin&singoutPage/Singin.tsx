@@ -32,16 +32,18 @@ const Singin = () => {
                   <label htmlFor="password">Password</label>
                   <input type="password" name="password" id="password" placeholder='Enter your password' className='p-3 my-2 bg-gray-700 rounded' />
                   
-                  <button className='bg-red-600 py-3 my-6 rounded font-bold' onClick={handleToAcc}>
+                  <button className='bg-red-600 py-3 my-6 rounded font-bold hover:bg-yellow-500' onClick={handleToAcc}>
                     Sign In
                   </button>
                   
                   <div className='flex justify-between items-center text-sm text-gray-600'>
                     <p><input type="checkbox" /> Remember Me</p>
-                    <p>Need Help?</p>
+                    <Link to="/" className='hover:text-yellow-500'>
+                      <p>Need Help?</p>
+                    </Link>
                   </div>
                   <p className='py-8'><span className='text-gray-600'>New to Safeflix?</span>{' '}
-                    <Link to="/singup">Sign Up</Link>
+                    <Link to="/singup" className='hover:text-yellow-500'>Sign Up</Link>
                   </p>
                 </form>
               </div>

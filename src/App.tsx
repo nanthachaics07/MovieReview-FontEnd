@@ -64,6 +64,7 @@ import Singin from "./pages/singin&singoutPage/Singin";
 import Singup from "./pages/singin&singoutPage/Singup";
 import NavBar from "./components/navbar/NavBar";
 import Account from "./pages/account/AccountPage"
+import Movie from "./pages/Movie"
 
 function App() {
   return (
@@ -76,6 +77,7 @@ function App() {
           <Route path="/singin" element={<Singin />} />
           <Route path="/singup" element={<Singup />} />
           <Route path="/account" element={<Account />} />
+          <Route path="/movies/:id" element={<Movie />} />
         </Routes>
       </div>
     </>

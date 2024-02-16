@@ -26,13 +26,15 @@ const Singin = () => {
                   <label htmlFor='confirmPassword'>Confirm Password</label>
                   <input type="password" name="confirmPassword" id="confirmPassword" placeholder='Enter your password' 
                           className='p-3 my-2 bg-gray-700 rounded' />
-                  <button className='bg-red-600 py-3 my-6 rounded font-bold'>Sign Up</button>
+                  <button className='bg-red-600 py-3 my-6 rounded font-bold hover:bg-yellow-500'>Sign Up</button>
                   <div className='flex justify-between items-center text-sm text-gray-600'>
                     <p><input type="checkbox" /> Remember Me</p>
-                    <p>Need Help?</p>
+                    <Link to="/" className='hover:text-yellow-500'>
+                      <p>Need Help?</p>
+                    </Link>
                   </div>
                   <p className='py-8'><span className='text-gray-600'>Already have an account?</span>{' '}
-                    <Link to="/singin">Sign In</Link>
+                    <Link to="/singin" className='hover:text-yellow-500'>Sign In</Link>
                   </p>
                 </form>
               </div>
