@@ -1,47 +1,60 @@
-import React from 'react';
-import { Link } from "react-router-dom";
+// import React from 'react';
+// import { Link, useNavigate, Outlet } from 'react-router-dom';
 
-function NavBar() {
+// interface NavBarProps {
+//   jwtToken: string;
+//   setJwtToken: (token: string) => void;
+// }
+
+// const NavBar: React.FC<NavBarProps> = ({ jwtToken, setJwtToken }) => {
 //   const navigate = useNavigate();
 
-  // const handleToHome = () => {
-  //   navigate("/");
-  // }
+//   const handleToSingOut = () => {
+//     navigate('/');
+//     setJwtToken('');
+//   };
 
-  // const handleToSingIn = () => {
-  //   navigate("/singin");
-  // }
+//   return (
+//     <nav className="bg-gray-800 fixed w-full z-10">
+//       <div className="max-w-full px-4 mx-auto sm:px-6 lg:px-8">
+//         <div className="flex items-center justify-between h-16">
+//           <div className="flex items-center">
+//             <Link to="/">
+//               <h1 className="text-red-600 text-4xl font-bold cursor-pointer mr-8 hover:text-yellow-500">
+//                 SAFEFLIX
+//               </h1>
+//             </Link>
+//           </div>
+//           <div className="flex items-center space-x-4">
+//             {jwtToken ? (
+//               <button
+//                 className="bg-red-600 px-6 py-2 rounded cursor-pointer text-white hover:bg-yellow-500 hover:text-red-600"
+//                 onClick={handleToSingOut}
+//               >
+//                 Sign Out
+//               </button>
+//             ) : (
+//               <>
+//                 <Link to="/singin">
+//                   <button className="text-white hover:text-yellow-500">Sign In</button>
+//                 </Link>
+//                 <Link to="/singup">
+//                   <button className="bg-red-600 px-6 py-2 rounded cursor-pointer text-white hover:bg-yellow-500 hover:text-red-600">
+//                     Sign Up
+//                   </button>
+//                 </Link>
+//               </>
+//             )}
+//           </div>
+//         </div>
+//         {/* <Outlet /> */}
+//       </div>
+//     </nav>
+//   );
+// };
 
-  return (
-    // <nav className="bg-gray-800 fixed w-full z-10">
-    <nav className="bg-gray-800 fixed w-full z-10">
-      <div className="max-w-full px-4 mx-auto sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          <div className="flex items-center">
-            <Link to="/">
-              <h1 className="text-red-600 text-4xl font-bold cursor-pointer mr-8 hover:text-yellow-500">
-                SAFEFLIX
-              </h1>
-            </Link>
-          </div>
-          <div className="flex items-center space-x-4">
-            <Link to="/singin">
-              <button className="text-white hover:text-yellow-500">Sign In</button>
-            </Link>
-            <Link to="/singup">
-              <button className="bg-red-600 px-6 py-2 rounded cursor-pointer text-white
-                hover:bg-yellow-500 hover:text-red-600">
-                Sign Up
-              </button>
-            </Link>
-          </div>
-        </div>
-      </div>
-    </nav>
-  );
-}
+// export default NavBar;
 
-export default NavBar;
 
 
 // import Container from 'react-bootstrap/Container';
@@ -69,3 +82,60 @@ export default NavBar;
 // }
 
 // export default NavBar;
+
+import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../../components/Auth/AuthContex';
+
+const NavBar: React.FC = () => {
+  const { jwtToken, setJwtToken } = useAuth();
+  const navigate = useNavigate();
+
+  console.log("jwtToken in NavBar : = ", jwtToken);
+
+  const handleToSingOut = () => {
+    navigate('/');
+    setJwtToken('');
+  };
+
+  return (
+    <nav className="bg-gray-800 fixed w-full z-10">
+      <div className="max-w-full px-4 mx-auto sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16">
+          <div className="flex items-center">
+            <Link to="/">
+              <h1 className="text-red-600 text-4xl font-bold cursor-pointer mr-8 hover:text-yellow-500">
+                SAFEFLIX
+              </h1>
+            </Link>
+          </div>
+          <div className="flex items-center space-x-4">
+            {jwtToken ? (
+              <button
+                className="bg-red-600 px-6 py-2 rounded cursor-pointer text-white hover:bg-yellow-500 hover:text-red-600"
+                onClick={handleToSingOut}
+              >
+                Sign Out
+              </button>
+            ) : (
+              <>
+                <Link to="/singin">
+                  <button className="text-white hover:text-yellow-500">Sign In</button>
+                </Link>
+                <Link to="/singup">
+                  <button className="bg-red-600 px-6 py-2 rounded cursor-pointer text-white hover:bg-yellow-500 hover:text-red-600">
+                    Sign Up
+                  </button>
+                </Link>
+              </>
+            )}
+          </div>
+        </div>
+        {/* <Outlet /> */}
+      </div>
+    </nav>
+  );
+};
+
+export default NavBar;
+
