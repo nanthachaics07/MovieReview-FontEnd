@@ -127,6 +127,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { AuthProvider } from './components/Auth/AuthContex';
+import PageNotFound from './components/errors/ErrorPageNotFound';
 import Main from './Main';
 // import { Route, Routes } from 'react-router-dom';
 import Singin from './pages/singin&singoutPage/Singin';
@@ -135,6 +136,8 @@ import NavBar from './components/navbar/NavBar';
 import Account from './pages/account/AccountPage';
 import Movie from './pages/Movie';
 import RegisPage from './pages/RegisterPage';
+import AdminPage from './pages/admin/AdminPage';
+
 
 function App() {
   return (
@@ -143,12 +146,14 @@ function App() {
         <div className="container">
           <NavBar />
           <Routes>
+            <Route path="/notfoundpage" element={<PageNotFound />} />
             <Route path="/" element={<Main />} />
             <Route path="/singin" element={<Singin />} />
             <Route path="/singup" element={<Singup />} />
             <Route path="/account" element={<Account />} />
             <Route path="/movies/:id" element={<Movie />} />
             <Route path="/register" element={<RegisPage />} />
+            <Route path="/admin" element={<AdminPage />} />
           </Routes>
         </div>
       {/* </Router> */}

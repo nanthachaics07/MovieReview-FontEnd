@@ -13,6 +13,7 @@ const Singin: React.FC = () => {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    console.log("Sing In email : ", email, " password : ", password);
     if (email === "safecs07@test.com") {
       setJwtToken("abcdefg");
       navigate('/');
@@ -35,7 +36,7 @@ const Singin: React.FC = () => {
             <div className='max-w-[450px] h-[600px] mx-auto bg-black/75 text-white'>
               <div className='max-w-[320px] mx-auto py-16'>
                 <h1 className='text-3xl font-bold text-center pb-10'>Sign In</h1>
-                {error && <p className='p-3 bg-red-400 my-2'>{error}</p>}
+                {error && <p className='p-3 bg-red-400 mb-1'>{error}</p>}
                 <form className='w-full flex flex-col py-2' onSubmit={handleSubmit}>
                   <label htmlFor="email">Email Address</label>
                   <input

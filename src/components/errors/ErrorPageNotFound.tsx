@@ -1,9 +1,8 @@
-
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useColorScheme } from '../components/navbar/Darkmode';
+import { useColorScheme } from '../navbar/Darkmode';
 
-function RegisterPage() {
+function NotFoundPage() {
   const { isChecked } = useColorScheme(); 
   const navigate = useNavigate();
 
@@ -16,21 +15,19 @@ function RegisterPage() {
               <div className="w-full lg:w-6/12 px-4">
                 <div className="text-center">
                   <h2 className={`text-4xl font-semibold leading-normal mb-2 ${isChecked ? 'whiteText' : 'text-gray-800'}`}>
-                    Say Hi Form Developer
+                    404 Page Not Found
                   </h2>
                   <p className={`text-lg font-light leading-relaxed mt-4 mb-4 ${isChecked ? 'whiteText' : 'text-gray-700'}`}>
-                    Pls Sing In Or Sing Up For Get Access Token.
+                    This page does not exist.
+                  </p>
+                  <p className={`text-lg font-light leading-relaxed mt-4 mb-4 ${isChecked ? 'whiteText' : 'text-gray-700'}`}>
+                    "{window.location.pathname}" Pls Contact Developer.
                   </p>
                   <div className="mt-[2rem]">
                     <button className="text-white font-bold px-6 py-4 rounded outline-none focus:outline-none mr-1 mb-1 bg-gray-700 active:bg-gray-800 
                       hover:bg-gray-800 uppercase text-sm shadow hover:shadow-lg ease-linear transition-all duration-150"
-                      onClick={() => navigate('/singin')}>
-                      Sing In
-                    </button>
-                    <button className="text-white font-bold px-6 py-4 rounded outline-none focus:outline-none mr-1 mb-1 bg-gray-700 active:bg-gray-800 
-                      hover:bg-gray-800 uppercase text-sm shadow hover:shadow-lg ease-linear transition-all duration-150"
-                      onClick={() => navigate('/singup')}>
-                      Sing Up
+                      onClick={() => navigate('/')}>
+                      Back To Home
                     </button>
                   </div>
                 </div>
@@ -43,5 +40,4 @@ function RegisterPage() {
   );
 }
 
-export default RegisterPage;
-
+export default NotFoundPage

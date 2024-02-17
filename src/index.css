@@ -2,6 +2,28 @@
 @tailwind components;
 @tailwind utilities;
 
-/* body {
-  background-color: rgb(0 0 0 / 0.75);
-} */
+body {
+  font-family: 'Work Sans', sans-serif;
+  /* Set the default background color for light mode */
+  background-color: #efefef;
+  /* color: #1f2023; */
+}
+
+body.dark {
+  background-color: #1f2023;
+
+}
+
+.whiteText {
+  color: #efefef;
+}
+
+.movieCardBG {
+  background-color: #1f2937;
+  /* background-color: #efefef; */
+  /* color: #1f2023; */
+  color: #efefef;
+
+}
+
+

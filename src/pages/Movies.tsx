@@ -1,6 +1,8 @@
 // import { release } from "os";
 import { useEffect, useState } from "react";
 import { Link, useParams, useNavigate, Outlet } from "react-router-dom";
+import { useAuth } from "../components/Auth/AuthContex";
+import { useColorScheme } from '../components/navbar/Darkmode';
 
 
 interface Movie {
@@ -12,12 +14,13 @@ interface Movie {
   imageUrl?: string; // Optional imageUrl property
 }
 
-const Movies = () => {
+const Movies: React.FC = () => {
+  const { isChecked } = useColorScheme(); 
   const [movies, setMovies] = useState<Movie[]>([]);
   const { id } = useParams<{ id: string }>(); // Get movie id from params
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
-  const [jwtToken, setJwtToken] = useState("");
+  const { jwtToken } = useAuth();
 
   
   useEffect(() => {
@@ -218,33 +221,28 @@ const Movies = () => {
 
 
 
-  const handleMovieClick = (movieId: number) => {
-    console.log("jwtToken in handleMovieClick : = ", jwtToken);
-
-    if (jwtToken !== "" ) {
-      navigate(`/movies/${movieId}`);
-    } else if (jwtToken === "" ) {
-      navigate("/register");
-    }
-  }
-
   // const handleMovieClick = (movieId: number) => {
-  //   if (localStorage.getItem('jwtToken')) {
-  //     navigate(`/movies/${movieId}`);
-  //   } else {
+  //   console.log("jwtToken in handleMovieClick : = ", jwtToken);
+
+  //   if (!jwtToken) {
   //     navigate("/register");
+  //   } else {
+  //     navigate(`/movies/${movieId}`);
   //   }
-  // };
+  // }
 
   return (
     <div className="container mx-auto absolute inset-[5.5rem]">
-      <h2 className="text-3xl font-bold mb-6 text-back text-center text-white">
+      <h2 className={`text-3xl font-bold mb-6  text-center ${isChecked ? 'whiteText' : 'text-gray-700 '}`}>
         Movie Review
       </h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 pb-[3rem]">
-        {movies.map((movie) => (
-          <div key={movie.id} className="p-4 bg-gray-100 rounded-lg hover:bg-gray-200/80">
-            <Link to={`/movies/${movie.id}`} onClick={() => handleMovieClick(movie.id)}>
+      {movies.map((movie) => (
+        <div key={movie.id} className={`p-4 ${isChecked ? 'movieCardBG hover:bg-gray-700 shadow-lg' : 'bg-gray-100 shadow-lg drop-shadow-2xl'} 
+          rounded-lg hover:bg-gray-200`}>
+            
+          {jwtToken ? (
+            <Link to={`/movies/${movie.id}`}>
               {movie.imageUrl && (
                 <img
                   src={movie.imageUrl}
@@ -252,20 +250,66 @@ const Movies = () => {
                   className="w-full h-64 object-cover mb-2 rounded-sm"
                 />
               )}
-              <h3 className="text-xl font-semibold mb-2">{movie.title}</h3>
-              <p className="text-gray-700">{movie.release_date}</p>
-              <p className="text-gray-700">{movie.mpaa_rating}</p>
+              <h3 className={`text-xl font-semibold mb-2 ${isChecked ? 'whiteText' : ' text-gray-700'}`}>{movie.title}</h3>
+              <p className={`${isChecked ? 'whiteText' : 'text-gray-700'}`}>{movie.release_date}</p>
+              <p className={`${isChecked ? 'whiteText' : 'text-gray-700'}`}>{movie.mpaa_rating}</p>
+            </Link>
+          ) : (
+          <div>
+              <Link to="/register">
+              {movie.imageUrl && (
+                <img
+                  src={movie.imageUrl}
+                  alt={movie.title}
+                  className="w-full h-64 object-cover mb-2 rounded-sm"
+                />
+              )}
+              <h3 className={`text-xl font-semibold mb-2 ${isChecked ? 'whiteText' : ' text-gray-700'}`}>{movie.title}</h3>
+              <p className={`${isChecked ? 'whiteText' : ' text-gray-700'}`}>{movie.release_date}</p>
+              <p className={`${isChecked ? 'whiteText' : ' text-gray-700'}`}>{movie.mpaa_rating}</p>
             </Link>
           </div>
-        ))}
-      </div>
-      <div>
-        <Outlet 
-          context={{jwtToken, setJwtToken}}
-        />
+          )}
+        </div>
+      ))}
       </div>
     </div>
   );
 };
 
 export default Movies;
+
+
+//   return (
+//     <div className="container mx-auto absolute inset-[5.5rem]">
+//       <h2 className="text-3xl font-bold mb-6 text-back text-center text-white">
+//         Movie Review
+//       </h2>
+//       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 pb-[3rem]">
+//         {movies.map((movie) => (
+//           <div key={movie.id} className="p-4 bg-gray-100 rounded-lg hover:bg-gray-200/80">
+//             <Link to={`/movies/${movie.id}`}>
+//               {movie.imageUrl && (
+//                 <img
+//                   src={movie.imageUrl}
+//                   alt={movie.title}
+//                   className="w-full h-64 object-cover mb-2 rounded-sm"
+//                 />
+//               )}
+//               <h3 className="text-xl font-semibold mb-2">{movie.title}</h3>
+//               <p className="text-gray-700">{movie.release_date}</p>
+//               <p className="text-gray-700">{movie.mpaa_rating}</p>
+//             </Link>
+//           </div>
+//         ))}
+//       </div>
+//       <div>
+//         <Outlet 
+//           context={{jwtToken, setJwtToken}}
+//         />
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default Movies;

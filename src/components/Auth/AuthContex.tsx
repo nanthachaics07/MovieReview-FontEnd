@@ -11,6 +11,15 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [jwtToken, setJwtToken] = useState<string>(''); // Initialize with an empty string
 
+  // Count jwtToken in local storage
+  const tokenLength = jwtToken.length;
+  console.log("Length of jwtToken in AuthContext: ", tokenLength);
+  // for (let i = 0; i < jwtToken.length; i++) {
+  //   for (let j = 0; j < jwtToken[i].length; j++) {
+  //     console.log(jwtToken[i][j]);
+  //   }
+  // }
+  
   console.log("jwtToken in AuthContext : = ", jwtToken);
 
   return (

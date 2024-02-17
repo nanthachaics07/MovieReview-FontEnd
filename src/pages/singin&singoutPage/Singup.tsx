@@ -11,6 +11,9 @@ const Singup: React.FC = () => {
   // const handleSubmit = (event: React.ChangeEvent<HTMLInputElement>) => {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    console.log("Sing Up email : ", email, " password : ", 
+                  password, " confirm password : ", confirmPassword);
+                  
     if (password !== confirmPassword) {
       setError("Passwords do not match");
     }
@@ -29,7 +32,7 @@ const Singup: React.FC = () => {
             <div className='max-w-[450px] h-[650px] mx-auto bg-black/75 text-white'>
               <div className='max-w-[320px] mx-auto py-10'>
                 <h1 className='text-3xl font-bold text-center pb-5'>Sign Up</h1>
-                {error && <p className='p-3 bg-red-400 my-2'>{error}</p>}
+                {error && <p className='p-3 bg-red-400 mb-1'>{error}</p>}
                 <form className='w-full flex flex-col py-2' onSubmit={handleSubmit}>
                   <label htmlFor="email">Email Address</label>
                   <input
