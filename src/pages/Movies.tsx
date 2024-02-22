@@ -33,7 +33,7 @@ const Movies: React.FC = () => {
         mpaa_rating: "R",
         description:
           "The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son.",
-        imageUrl: "https://assets.nflxext.com/ffe/siteui/vlv3/f841d4c7-10e1-40af-bcae-07a3f8dc141a/f6d7434e-d6de-4185-a6d4-c77a2d08737b/US-en-20220502-popsignuptwoweeks-perspective_alpha_website_medium.jpg",
+        imageUrl: "https://img.monomax.me/-XnASaiSaflF2FV3NDZwMvnRo4k=/monomax-obj.obs.ap-southeast-2.myhuaweicloud.com/assets/fileupload/picture/the-godfather-508d945641aed.jpg",
       },
       {
         id: 2,
@@ -279,37 +279,3 @@ const Movies: React.FC = () => {
 
 export default Movies;
 
-
-//   return (
-//     <div className="container mx-auto absolute inset-[5.5rem]">
-//       <h2 className="text-3xl font-bold mb-6 text-back text-center text-white">
-//         Movie Review
-//       </h2>
-//       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 pb-[3rem]">
-//         {movies.map((movie) => (
-//           <div key={movie.id} className="p-4 bg-gray-100 rounded-lg hover:bg-gray-200/80">
-//             <Link to={`/movies/${movie.id}`}>
-//               {movie.imageUrl && (
-//                 <img
-//                   src={movie.imageUrl}
-//                   alt={movie.title}
-//                   className="w-full h-64 object-cover mb-2 rounded-sm"
-//                 />
-//               )}
-//               <h3 className="text-xl font-semibold mb-2">{movie.title}</h3>
-//               <p className="text-gray-700">{movie.release_date}</p>
-//               <p className="text-gray-700">{movie.mpaa_rating}</p>
-//             </Link>
-//           </div>
-//         ))}
-//       </div>
-//       <div>
-//         <Outlet 
-//           context={{jwtToken, setJwtToken}}
-//         />
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default Movies;

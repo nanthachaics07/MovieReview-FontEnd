@@ -107,13 +107,13 @@ const NavBar: React.FC = () => {
             <div className="flex items-center space-x-4">
               {jwtToken ? (
                 <>
-                  <Link to="/Account">
+                  <Link to="/account">
                     <button className="bg-yellow-600 px-6 py-2 rounded cursor-pointer text-white hover:bg-yellow-500 hover:text-white">
                       Account
                     </button>
                   </Link>
                   <button
-                  className="bg-red-600 px-6 py-2 rounded cursor-pointer text-white hover:bg-red-500 hover:text-red-600"
+                  className="bg-red-600 px-6 py-2 rounded cursor-pointer text-white hover:bg-red-500 hover:text-white"
                   onClick={handleToSingOut}
                   >
                     Sign Out

@@ -5,12 +5,14 @@
 body {
   font-family: 'Work Sans', sans-serif;
   /* Set the default background color for light mode */
-  background-color: #efefef;
+  background-color: #f4f4f6;
+  /* background-color: #efefef; */
   /* color: #1f2023; */
 }
 
 body.dark {
   background-color: #1f2023;
+  /* background-color: #727272; */
 
 }
 
@@ -19,7 +21,8 @@ body.dark {
 }
 
 .movieCardBG {
-  background-color: #1f2937;
+  /* background-color: #1f2937; */
+  background-color: #3c3c3c;
   /* background-color: #efefef; */
   /* color: #1f2023; */
   color: #efefef;

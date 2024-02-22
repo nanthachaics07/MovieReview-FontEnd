@@ -97,7 +97,7 @@ const Movie: React.FC = () => {
         mpaa_rating: "R",
         description:
           "The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son.",
-        imageUrl: "https://assets.nflxext.com/ffe/siteui/vlv3/f841d4c7-10e1-40af-bcae-07a3f8dc141a/f6d7434e-d6de-4185-a6d4-c77a2d08737b/US-en-20220502-popsignuptwoweeks-perspective_alpha_website_medium.jpg",
+        imageUrl: "https://img.monomax.me/-XnASaiSaflF2FV3NDZwMvnRo4k=/monomax-obj.obs.ap-southeast-2.myhuaweicloud.com/assets/fileupload/picture/the-godfather-508d945641aed.jpg",
       },
       "2": {
         id: 2,
