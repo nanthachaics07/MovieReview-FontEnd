@@ -23,9 +23,32 @@ const NavBar: React.FC = () => {
 
   console.log("jwtToken in NavBar : = ", jwtToken);
 
-  const handleToSingOut = () => {
-    navigate('/');
-    setJwtToken('');
+  // const handleToSingOut = () => {
+  //   navigate('/');
+  //   setJwtToken('');
+  // };
+
+  const handleToSingOut = async () => {
+    try {
+      const response = await fetch(`http://127.0.0.1:8080/logout`, {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          Authorization: `Bearer ${jwtToken}`,
+        }
+      });
+      
+      if (response.ok) { // 200
+        setJwtToken(''); // Clear token 
+        navigate('/'); 
+      } else {
+        // Handle errors
+        console.error('Logout failed:', response.statusText);
+      }
+    } catch (error) {
+
+      console.error('Network error:', error);
+    }
   };
 
   return (
