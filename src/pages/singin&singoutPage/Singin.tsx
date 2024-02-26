@@ -6,22 +6,48 @@ import { useAuth } from '../../components/Auth/AuthContex';
 const Singin: React.FC = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [rememberMe, setRememberMe] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
 
   const { setJwtToken } = useAuth();
   const navigate = useNavigate();
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  // const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  //   event.preventDefault();
+  //   console.log("Sing In email : ", email, " password : ", password);
+  //   if (email === "safecs07@test.com") {
+  //     setJwtToken("abcdefg");
+  //     navigate('/');
+  //     setError("");
+  //   } else {
+  //     setError("Invalid email or password");
+  //   }
+  // }
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log("Sing In email : ", email, " password : ", password);
-    if (email === "safecs07@test.com") {
-      setJwtToken("abcdefg");
-      navigate('/');
-      setError("");
-    } else {
-      setError("Invalid email or password");
+    
+    try {
+      const response = await fetch(`http://127.0.0.1:8080/login`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password ,rememberMe}),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setJwtToken(data.token); // append token to local storage นะจ๊ะ
+        navigate('/');
+      } else {
+        setError("Invalid email or password");
+      }
+    } catch (error) {
+      console.error('Error signing in:', error);
+      setError("An error occurred while signing in");
     }
-  }
+  };
 
   return (
     <div className="w-full h-screen">
@@ -63,7 +89,11 @@ const Singin: React.FC = () => {
                   </button>
                   <div className='flex justify-between items-center text-sm text-gray-600'>
                     <p>
-                      <input type="checkbox" /> Remember Me</p>
+                      <input type="checkbox" checked={rememberMe} 
+                        onChange={() => setRememberMe(!rememberMe)}
+                        /> 
+                      Remember Me
+                    </p>
                     <Link to="/" className='hover:text-yellow-500'>
                       <p>Need Help?</p>
                     </Link>

@@ -7,17 +7,51 @@ const Singup: React.FC = () => {
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
   const [error, setError] = useState<string>("");
+  const navigate = useNavigate();
 
   // const handleSubmit = (event: React.ChangeEvent<HTMLInputElement>) => {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    console.log("Sing Up email : ", email, " password : ", 
-                  password, " confirm password : ", confirmPassword);
+  // const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  //   event.preventDefault();
+  //   console.log("Sing Up email : ", email, " password : ", 
+  //                 password, " confirm password : ", confirmPassword);
                   
+  //   if (password !== confirmPassword) {
+  //     setError("Passwords do not match");
+  //   }
+  // }
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
     if (password !== confirmPassword) {
       setError("Passwords do not match");
+      return;
     }
-  }
+
+    try {
+      const response = await fetch(`http://127.0.0.1:8080/register`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          email,
+          password
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error("Registration failed");
+      }
+
+      // log Registration successful 
+      console.log("Registration successful");
+      navigate("/singin");
+    } catch (error) {
+      console.error("Error registering user:", error);
+      setError("Error registering user. Please try again later.");
+    }
+  };
 
   return (
     <div className="w-full h-screen">
@@ -69,7 +103,9 @@ const Singup: React.FC = () => {
                   </button>
                   <div className='flex justify-between items-center text-sm text-gray-600'>
                     <p>
-                      <input type="checkbox" /> Remember Me</p>
+                      {/* <input type="checkbox" />  */}
+                      Remember Me
+                    </p>
                     <Link to="/" className='hover:text-yellow-500'>
                       <p>Need Help?</p>
                     </Link>
