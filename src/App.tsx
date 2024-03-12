@@ -1,6 +1,7 @@
 
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+// import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { AuthProvider } from './components/Auth/AuthContex';
 import PageNotFound from './components/errors/ErrorPageNotFound';
 import Main from './Main';
@@ -15,6 +16,7 @@ import AdminPage from './pages/admin/AdminPage';
 
 
 function App() {
+
   return (
     <AuthProvider>
       {/* <Router> */}
@@ -26,7 +28,7 @@ function App() {
             <Route path="/singin" element={<Singin />} />
             <Route path="/singup" element={<Singup />} />
             <Route path="/account" element={<Account />} />
-            <Route path="/movies/:id" element={<Movie />} />
+            <Route path="/movie/:id" element={<Movie />} />
             <Route path="/register" element={<RegisPage />} />
             <Route path="/admin" element={<AdminPage />} />
           </Routes>
