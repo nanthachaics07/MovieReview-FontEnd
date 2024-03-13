@@ -74,10 +74,16 @@ const Movie: React.FC = () => {
   useEffect(() => {
     const fetchMovie = async () => {
       try {
-        const response = await fetch(`http://127.0.0.1:8080/movies/${id}`);
-        if (!response.ok) {
-          throw new Error('Movie not found');
-        }
+        const response = await fetch(`http://127.0.0.1:8080/movie/${id}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            // Authorization: `Bearer ${jwtToken}`,
+          }
+        });;
+        // if (!response.ok) {
+        //   throw new Error('Movie not found');
+        // }
         const movieData: MovieType = await response.json();
         setMovie(movieData);
       } catch (error) {
@@ -87,7 +93,9 @@ const Movie: React.FC = () => {
     };
 
     fetchMovie();
-  }, [id, navigate]);
+  }, [id
+  , navigate
+  ]);
 
   return (
     <>

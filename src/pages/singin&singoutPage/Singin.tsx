@@ -8,6 +8,7 @@ const Singin: React.FC = () => {
   const [password, setPassword] = useState<string>("");
   const [rememberMe, setRememberMe] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
+  // const [redirect, setRedirect] = useState<boolean>(false);
 
   const { setJwtToken } = useAuth();
   const navigate = useNavigate();
@@ -28,17 +29,21 @@ const Singin: React.FC = () => {
     event.preventDefault();
     
     try {
-      const response = await fetch(`http://127.0.0.1:8080/login`, {
+      const response = await fetch(`http://127.0.0.1:8080/auth/singin`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, password ,rememberMe}),
+        headers: {'Content-Type': 'application/json'},
+        credentials: 'include',
+        body: JSON.stringify({ 
+              email, 
+              password ,
+              rememberMe 
+            }),
       });
 
       if (response.ok) {
         const data = await response.json();
         setJwtToken(data.token); // append token to local storage นะจ๊ะ
+        console.log("token in singin : ",data.token);
         navigate('/');
       } else {
         setError("Invalid email or password");
