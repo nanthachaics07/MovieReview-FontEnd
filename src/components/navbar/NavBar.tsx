@@ -30,12 +30,13 @@ const NavBar: React.FC = () => {
 
   const handleToSingOut = async () => {
     try {
-      const response = await fetch(`http://127.0.0.1:8080/logout`, {
+      const response = await fetch(`http://127.0.0.1:8080/auth/singout`, {
         method: 'POST',
         credentials: 'include',
         headers: {
-          Authorization: `Bearer ${jwtToken}`,
-        }
+          // Authorization: `Bearer ${jwtToken}`,
+          'Content-Type': 'application/json',
+        },
       });
       
       if (response.ok) { // 200
