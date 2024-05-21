@@ -1,24 +1,41 @@
 
-import React from 'react';
-import ReactDOM from 'react-dom/client'; // แก้การนำเข้า ReactDOM
+// import React from 'react';
+// import ReactDOM from 'react-dom'; // แก้การนำเข้า ReactDOM
 
+// import { BrowserRouter } from 'react-router-dom';
+// import './index.css';
+// import App from './App';
+
+
+// const root = ReactDOM.createRoot(
+//   document.getElementById('root') as HTMLElement
+// );
+// // แทนด้วยการเรียก ReactDOM.render เหมือนเดิม
+// root.render(
+//   <React.StrictMode>
+//     <BrowserRouter>
+//       <App />
+//     </BrowserRouter>
+//   </React.StrictMode>,
+//   // document.getElementById('root') // ส่วนนี้คือ element ที่ต้องการให้ React render เข้าไป
+// );
+
+import React from 'react';
+import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import './index.css';
 import App from './App';
 
-
-const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
-);
-// แทนด้วยการเรียก ReactDOM.render เหมือนเดิม
-root.render(
+ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
       <App />
     </BrowserRouter>
   </React.StrictMode>,
-  // document.getElementById('root') // ส่วนนี้คือ element ที่ต้องการให้ React render เข้าไป
+  document.getElementById('root')
 );
+
+
 
 // import React from 'react';
 // import ReactDOM from 'react-dom';

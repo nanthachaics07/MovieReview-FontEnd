@@ -12,18 +12,6 @@ const Singin: React.FC = () => {
   const { setJwtToken } = useAuth();
   const navigate = useNavigate();
 
-  // const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-  //   event.preventDefault();
-  //   console.log("Sing In email : ", email, " password : ", password);
-  //   if (email === "safecs07@test.com") {
-  //     setJwtToken("abcdefg");
-  //     navigate('/');
-  //     setError("");
-  //   } else {
-  //     setError("Invalid email or password");
-  //   }
-  // }
-
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     
