@@ -1,9 +1,8 @@
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../../components/Auth/AuthContex';
 
-const Singin: React.FC = () => {
+const SignIn: React.FC = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [rememberMe, setRememberMe] = useState<boolean>(false);
@@ -12,33 +11,29 @@ const Singin: React.FC = () => {
   const { setJwtToken } = useAuth();
   const navigate = useNavigate();
 
-  // const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-  //   event.preventDefault();
-  //   console.log("Sing In email : ", email, " password : ", password);
-  //   if (email === "safecs07@test.com") {
-  //     setJwtToken("abcdefg");
-  //     navigate('/');
-  //     setError("");
-  //   } else {
-  //     setError("Invalid email or password");
-  //   }
-  // }
+  const [token, setToken] = useState(localStorage.getItem('jwtToken') || '');
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    
+
     try {
-      const response = await fetch(`http://127.0.0.1:8080/login`, {
+      const response = await fetch('http://127.0.0.1:8080/auth/singin', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, password ,rememberMe}),
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({
+          email,
+          password,
+          rememberMe
+        }),
       });
 
       if (response.ok) {
         const data = await response.json();
-        setJwtToken(data.token); // append token to local storage นะจ๊ะ
+        setJwtToken(data.token); 
+        console.log("token in signin: ", data.token);
+        // localStorage.setItem('Token', data.token);
+        setToken(data.token);
         navigate('/');
       } else {
         setError("Invalid email or password");
@@ -48,6 +43,17 @@ const Singin: React.FC = () => {
       setError("An error occurred while signing in");
     }
   };
+
+  useEffect(() => {
+    if (token) {
+      localStorage.setItem('jwtToken', token);
+      setJwtToken(token);
+    } else {
+      localStorage.removeItem('Token');
+      navigate('/singin');
+    }
+  }, [token, navigate, setJwtToken]);
+
 
   return (
     <div className="w-full h-screen">
@@ -89,16 +95,19 @@ const Singin: React.FC = () => {
                   </button>
                   <div className='flex justify-between items-center text-sm text-gray-600'>
                     <p>
-                      <input type="checkbox" checked={rememberMe} 
+                      <input
+                        type="checkbox"
+                        checked={rememberMe}
                         onChange={() => setRememberMe(!rememberMe)}
-                        /> 
+                      />{' '}
                       Remember Me
                     </p>
                     <Link to="/" className='hover:text-yellow-500'>
                       <p>Need Help?</p>
                     </Link>
                   </div>
-                  <p className='py-8'><span className='text-gray-600'>New to Safeflix?</span>{' '}
+                  <p className='py-8'>
+                    <span className='text-gray-600'>New to Safeflix?</span>{' '}
                     <Link to="/signup" className='hover:text-yellow-500'>Sign Up</Link>
                   </p>
                 </form>
@@ -111,4 +120,4 @@ const Singin: React.FC = () => {
   );
 };
 
-export default Singin;
+export default SignIn;

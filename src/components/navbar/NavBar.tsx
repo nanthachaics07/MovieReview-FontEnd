@@ -1,5 +1,5 @@
 
-import React, { useState, ChangeEvent } from 'react';
+import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../components/Auth/AuthContex';
 import { useColorScheme } from './Darkmode';
@@ -30,19 +30,23 @@ const NavBar: React.FC = () => {
 
   const handleToSingOut = async () => {
     try {
-      const response = await fetch(`http://127.0.0.1:8080/logout`, {
+      const response = await fetch(`http://127.0.0.1:8080/auth/singout`, {
         method: 'POST',
         credentials: 'include',
         headers: {
           Authorization: `Bearer ${jwtToken}`,
-        }
+          'Content-Type': 'application/json',
+        },
       });
       
       if (response.ok) { // 200
-        setJwtToken(''); // Clear token 
+        setJwtToken(''); 
+        //TODO: ลบ cookie client อีกรอบ
+        document.cookie = 'Authorization=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+        // localStorage.removeItem('Authorization');
+        // localStorage.clear();
         navigate('/'); 
       } else {
-        // Handle errors
         console.error('Logout failed:', response.statusText);
       }
     } catch (error) {
@@ -85,7 +89,7 @@ const NavBar: React.FC = () => {
                     height='16'
                     viewBox='0 0 16 16'
                     fill='none'
-                    xmlns='http://www.w3.org/2000/svg'
+                    xmlns='http://www.w3.org/2000/svg' // ไว้ ตั้ง icon นะจ๊ะ
                   >
                     <g clipPath='url(#clip0_3128_692)'>
                       <path
@@ -135,12 +139,14 @@ const NavBar: React.FC = () => {
                       Account
                     </button>
                   </Link>
-                  <button
-                  className="bg-red-600 px-6 py-2 rounded cursor-pointer text-white hover:bg-red-500 hover:text-white"
-                  onClick={handleToSingOut}
-                  >
-                    Sign Out
-                  </button>
+                  <Link to="/">
+                    <button
+                    className="bg-red-600 px-6 py-2 rounded cursor-pointer text-white hover:bg-red-500 hover:text-white"
+                    onClick={handleToSingOut}
+                    >
+                      Sign Out
+                    </button>
+                  </Link>
                 </>
               ) : (
                 <>

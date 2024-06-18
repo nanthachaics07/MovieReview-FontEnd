@@ -1,3 +1,100 @@
+
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { useAuth } from "../components/Auth/AuthContex";
+import { useColorScheme } from '../components/navbar/Darkmode';
+
+
+interface Movie {
+  id: number;
+  title: string;
+  release_date: string;
+  mpaa_rating: string;
+  imageUrl: string; // Optional imageUrl property
+}
+
+const Movies: React.FC = () => {
+  const { isChecked } = useColorScheme(); 
+  const [movies, setMovies] = useState<Movie[]>([]);
+  const { jwtToken } = useAuth();
+
+  useEffect(() => {
+    const fetchMovies = async () => {
+      try {
+        const response = await fetch(`http://127.0.0.1:8080/`, {
+        // const response = await fetch(`http://localhost:8080/home`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            // Authorization: `Bearer ${jwtToken}`,
+          }
+        });
+        if (!response.ok) {
+          throw new Error("Failed to fetch movies");
+        }
+        const data = await response.json();
+        setMovies(data);
+      } catch (error) {
+        console.error("Error fetching movies:", error);
+        // Handle error, show error message, etc.
+      }
+    };
+
+    fetchMovies();
+  // }, [jwtToken]);
+  }, []);
+
+
+  return (
+    <div className="container mx-auto absolute inset-[5.5rem]">
+      <h2 className={`text-3xl font-bold mb-6  text-center ${isChecked ? 'whiteText' : 'text-gray-700 '}`}>
+        Movie Review
+      </h2>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 pb-[3rem]">
+      {movies.map((movie) => (
+        <div key={movie.id} className={`p-4 ${isChecked ? 'movieCardBG hover:bg-gray-700 shadow-lg' : 'bg-gray-100 shadow-lg drop-shadow-2xl'} 
+          rounded-lg hover:bg-gray-200`}>
+            
+          {jwtToken ? (
+            <Link to={`/movie/${movie.id}`}>
+              {movie.imageUrl && (
+                <img
+                  src={movie.imageUrl}
+                  alt={movie.title}
+                  className="w-full h-64 object-cover mb-2 rounded-sm"
+                />
+              )}
+              <h3 className={`text-xl font-semibold mb-2 ${isChecked ? 'whiteText' : ' text-gray-700'}`}>{movie.title}</h3>
+              <p className={`${isChecked ? 'whiteText' : 'text-gray-700'}`}>{movie.release_date}</p>
+              <p className={`${isChecked ? 'whiteText' : 'text-gray-700'}`}>{movie.mpaa_rating}</p>
+            </Link>
+          ) : (
+          <div>
+              <Link to="/register">
+              {movie.imageUrl && (
+                <img
+                  src={movie.imageUrl}
+                  alt={movie.title}
+                  className="w-full h-64 object-cover mb-2 rounded-sm"
+                />
+              )}
+              <h3 className={`text-xl font-semibold mb-2 ${isChecked ? 'whiteText' : ' text-gray-700'}`}>{movie.title}</h3>
+              <p className={`${isChecked ? 'whiteText' : ' text-gray-700'}`}>{movie.release_date}</p>
+              <p className={`${isChecked ? 'whiteText' : ' text-gray-700'}`}>{movie.mpaa_rating}</p>
+            </Link>
+          </div>
+          )}
+        </div>
+      ))}
+      </div>
+    </div>
+  );
+};
+
+export default Movies;
+
+
+
 // // import { release } from "os";
 // import { useEffect, useState } from "react";
 // import { Link, useParams, useNavigate, Outlet } from "react-router-dom";
@@ -278,143 +375,3 @@
 // };
 
 // export default Movies;
-
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { useAuth } from "../components/Auth/AuthContex";
-import { useColorScheme } from '../components/navbar/Darkmode';
-
-
-interface Movie {
-  id: number;
-  title: string;
-  release_date: string;
-  mpaa_rating: string;
-  imageUrl: string; // Optional imageUrl property
-}
-
-const Movies: React.FC = () => {
-  const { isChecked } = useColorScheme(); 
-  const [movies, setMovies] = useState<Movie[]>([]);
-  const { jwtToken } = useAuth();
-
-  useEffect(() => {
-    const fetchMovies = async () => {
-      try {
-        const response = await fetch(`http://127.0.0.1:8080/`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            // Authorization: `Bearer ${jwtToken}`,
-          }
-        });
-        if (!response.ok) {
-          throw new Error("Failed to fetch movies");
-        }
-        const data = await response.json();
-        setMovies(data);
-      } catch (error) {
-        console.error("Error fetching movies:", error);
-        // Handle error, show error message, etc.
-      }
-    };
-
-    fetchMovies();
-  // }, [jwtToken]);
-  }, []);
-
-//   useEffect( () => {
-//     const headers = new Headers();
-//     headers.append("Content-Type", "application/json");
-
-//     const requestOptions = {
-//         method: "GET",
-//         headers: headers,
-//     }
-
-//     fetch(`http://127.0.0.1:8080/`, requestOptions)
-//         .then((response) => response.json())
-//         .then((data) => {
-//             setMovies(data);
-//         })
-//         .catch(err => {
-//             console.log("Error fetching movies", err);
-//         })
-
-// }, []);
-    
-//   return (
-//     <div className="container mx-auto absolute inset-[5.5rem]">
-//       <h2 className={`text-3xl font-bold mb-6  text-center ${isChecked ? 'whiteText' : 'text-gray-700 '}`}>
-//         Movie Review
-//       </h2>
-//       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 pb-[3rem]">
-//         {movies.map((movie) => (
-//           <div key={movie.id} className={`p-4 ${isChecked ? 'movieCardBG hover:bg-gray-700 shadow-lg' : 'bg-gray-100 shadow-lg drop-shadow-2xl'} 
-//             rounded-lg hover:bg-gray-200`}>
-//             <Link to={`/movies/${movie.id}`}>
-//               {movie.imageUrl && (
-//                 <img
-//                   src={movie.imageUrl}
-//                   alt={movie.title}
-//                   className="w-full h-64 object-cover mb-2 rounded-sm"
-//                 />
-//               )}
-//               <h3 className={`text-xl font-semibold mb-2 ${isChecked ? 'whiteText' : ' text-gray-700'}`}>{movie.title}</h3>
-//               <p className={`${isChecked ? 'whiteText' : 'text-gray-700'}`}>{movie.release_date}</p>
-//               <p className={`${isChecked ? 'whiteText' : 'text-gray-700'}`}>{movie.mpaa_rating}</p>
-//             </Link>
-//           </div>
-//         ))}
-//       </div>
-//     </div>
-//   );
-// };
-
-  return (
-    <div className="container mx-auto absolute inset-[5.5rem]">
-      <h2 className={`text-3xl font-bold mb-6  text-center ${isChecked ? 'whiteText' : 'text-gray-700 '}`}>
-        Movie Review
-      </h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 pb-[3rem]">
-      {movies.map((movie) => (
-        <div key={movie.id} className={`p-4 ${isChecked ? 'movieCardBG hover:bg-gray-700 shadow-lg' : 'bg-gray-100 shadow-lg drop-shadow-2xl'} 
-          rounded-lg hover:bg-gray-200`}>
-            
-          {jwtToken ? (
-            <Link to={`/movies/${movie.id}`}>
-              {movie.imageUrl && (
-                <img
-                  src={movie.imageUrl}
-                  alt={movie.title}
-                  className="w-full h-64 object-cover mb-2 rounded-sm"
-                />
-              )}
-              <h3 className={`text-xl font-semibold mb-2 ${isChecked ? 'whiteText' : ' text-gray-700'}`}>{movie.title}</h3>
-              <p className={`${isChecked ? 'whiteText' : 'text-gray-700'}`}>{movie.release_date}</p>
-              <p className={`${isChecked ? 'whiteText' : 'text-gray-700'}`}>{movie.mpaa_rating}</p>
-            </Link>
-          ) : (
-          <div>
-              <Link to="/register">
-              {movie.imageUrl && (
-                <img
-                  src={movie.imageUrl}
-                  alt={movie.title}
-                  className="w-full h-64 object-cover mb-2 rounded-sm"
-                />
-              )}
-              <h3 className={`text-xl font-semibold mb-2 ${isChecked ? 'whiteText' : ' text-gray-700'}`}>{movie.title}</h3>
-              <p className={`${isChecked ? 'whiteText' : ' text-gray-700'}`}>{movie.release_date}</p>
-              <p className={`${isChecked ? 'whiteText' : ' text-gray-700'}`}>{movie.mpaa_rating}</p>
-            </Link>
-          </div>
-          )}
-        </div>
-      ))}
-      </div>
-    </div>
-  );
-};
-
-export default Movies;
